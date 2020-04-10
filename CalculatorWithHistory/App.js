@@ -22,7 +22,7 @@ export default function App() {
         setResult((parseInt(number1)) + (parseInt(number2)));
         setData([
             ...data, {
-                key: number1 + ' + ' + number2 + ' = ' + ((parseInt(number1)) + (parseInt(number2)))
+                key: String(data.length), text: number1 + ' + ' + number2 + ' = ' + ((parseInt(number1)) + (parseInt(number2)))
             }
         ]);
     }
@@ -31,7 +31,7 @@ export default function App() {
         setResult((parseInt(number1)) - (parseInt(number2)));
         setData([
             ...data, {
-                key: number1 + ' - ' + number2 + ' = ' + ((parseInt(number1)) - (parseInt(number2)))
+                key: String(data.length), text:number1 + ' - ' + number2 + ' = ' + ((parseInt(number1)) - (parseInt(number2)))
             }
         ]);
     }
@@ -45,6 +45,7 @@ export default function App() {
                 borderColor: 'gray',
                 borderWidth: 1
             }}
+                keyboardType='number-pad'
                 onChangeText={number => setNumber1(number)}
                 value={number1}/>
             <TextInput
@@ -53,6 +54,7 @@ export default function App() {
                 borderColor: 'gray',
                 borderWidth: 1
             }}
+                keyboardType='number-pad'
                 onChangeText={number => setNumber2(number)}
                 value={number2}/>
             <View style={styles.buttons}>
@@ -62,7 +64,7 @@ export default function App() {
             <FlatList
                 style={styles.flatlist}
                 data={data}
-                renderItem={({item}) => <Text>{item.key}</Text>}/>
+                renderItem={({item}) => <Text>{item.text}</Text>}/>
         </View>
     );
 }
