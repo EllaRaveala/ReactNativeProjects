@@ -5,7 +5,6 @@ export default function App() {
 
   const [guess, setGuess] = useState('');
   const [random] = useState(Math.floor(Math.random() * 100) + 1);
-  const [difference, setDifference] = useState(0);
   const [message, setMessage] = useState('Guess a number between 1-100');
   const [count, setCount] = useState(0);
 
@@ -15,11 +14,9 @@ export default function App() {
     setCount(count+1);
   
     if (guess > random) {
-      setDifference(guess-random);
       setMessage(`Your guess ${guess} is too high`);
     }
     else if(guess<random){
-      setDifference(random-guess);
       setMessage(`Your guess ${guess} is too low`);
     }
     else{
