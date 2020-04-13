@@ -19,7 +19,7 @@ export default function App() {
     const [count,
         setCount] = useState(0);
     const [highscore,
-        setHighScore] = useState('');
+        setHighScore] = useState(0);
 
     const checkAnswer = () => {
 
@@ -29,58 +29,65 @@ export default function App() {
             setMessage(`Your guess ${guess} is too high`);
         } else if (guess < random) {
             setMessage(`Your guess ${guess} is too low`);
-        } else if (guess==random) {
+        } else if (guess == random) {
             setMessage('');
             Alert.alert('You guessed the number in ' + count + ' guesses');
-            let value=parseInt(readAsyncStorage());
-            if (count<value){
-            addToAsyncStorage();
+
+            if (highscore == 0) {
+                setHighScore(count);
+            } else if (count < highscore) {
+                setHighScore(count);
+                addToAsyncStorage();
             }
         }
     }
     addToAsyncStorage = async() => {
         try {
             await AsyncStorage.setItem('highScore', JSON.stringify(count));
-            let readValue= readAsyncStorage();
-            setHighScore(readValue);
+            //readAsyncStorage();
         } catch (error) {
             Alert.alert('Error saving data');
         }
-      }
+    }
 
     readAsyncStorage = async() => {
         try {
-            let readValue= await AsyncStorage.getItem('highScore');
+            let readValue = await AsyncStorage.getItem('highScore');
             JSON.parse(readValue);
-            return readValue;
+            parseInt(readValue);
+            setHighScore(readValue);
         } catch (error) {
-              Alert.alert('Error reading data');
+            Alert.alert('Error reading data');
         }
-      }
-
-        return (
-            <View style={styles.container}>
-                <Text>{message}</Text>
-                <TextInput
-                    style={styles.textinput}
-                    onChangeText={text => setGuess(text)}
-                    value={guess}></TextInput>
-                <Button onPress={checkAnswer} title='Make a guess'></Button>
-                <Text>Highscore: + {highscore} + guesses</Text>
-            </View>
-        );
     }
 
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: '#fff',
-            alignItems: 'center',
-            justifyContent: 'center'
-        },
-        textinput: {
-            width: 200,
-            borderColor: 'gray',
-            borderWidth: 1
-        }
-    });
+    useEffect(() => {
+        readAsyncStorage();
+    }),[];
+
+    return (
+        <View style={styles.container}>
+            <Text>{message}</Text>
+            <TextInput
+                style={styles.textinput}
+                onChangeText={text => setGuess(text)}
+                value={guess}></TextInput>
+            <Button onPress={checkAnswer} title='Make a guess'></Button>
+            <Text>Highscore: {highscore} guesses</Text>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    textinput: {
+        width: 200,
+        borderColor: 'gray',
+        borderWidth: 1
+    }
+});
