@@ -37,14 +37,10 @@ export default function App() {
             }}
                 onChangeText={number => setNumber2(number)}
                 value={number2}/>
-            <View
-                style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-around'
-            }}>
-                <Button onPress={increase} title="+"/>
-                <Button onPress={decrease} title="-"/>
+            <Text>{"\n"}</Text>
+            <View style={styles.buttons}>
+                    <Button onPress={increase} title="+"/>
+                    <Button onPress={decrease} title="-"/>
             </View>
         </View>
     );
@@ -56,5 +52,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    buttons:{
+        width: '20%',
+        justifyContent: 'space-around',
+        flexDirection: 'row',
+        alignItems: 'center'
+
     }
 });

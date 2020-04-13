@@ -57,6 +57,7 @@ export default function App() {
                 keyboardType='number-pad'
                 onChangeText={number => setNumber2(number)}
                 value={number2}/>
+            <Text>{"\n"}</Text>
             <View style={styles.buttons}>
                 <Button style={styles.button} onPress={increase} title="+"/>
                 <Button style={styles.button} onPress={decrease} title="-"/>
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
     buttons: {
         flexDirection: 'row',
         alignItems: 'center',
+        width: '20%',
         justifyContent: 'space-around'
     }
 });
