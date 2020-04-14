@@ -32,10 +32,9 @@ export default function App() {
         } else if (guess == random) {
             setMessage('');
             Alert.alert('You guessed the number in ' + count + ' guesses');
-
-            if (highscore == 0) {
-                setHighScore(count);
-            } else if (count < highscore) {
+            parseInt(highscore);
+            parseInt(count);
+            if (highscore == 0 || count < highscore) {
                 setHighScore(count);
                 addToAsyncStorage();
             }
@@ -44,7 +43,6 @@ export default function App() {
     addToAsyncStorage = async() => {
         try {
             await AsyncStorage.setItem('highScore', JSON.stringify(count));
-            //readAsyncStorage();
         } catch (error) {
             Alert.alert('Error saving data');
         }
@@ -53,9 +51,12 @@ export default function App() {
     readAsyncStorage = async() => {
         try {
             let readValue = await AsyncStorage.getItem('highScore');
-            JSON.parse(readValue);
-            parseInt(readValue);
-            setHighScore(readValue);
+            if (readValue == null) {
+                setHighScore(0);
+            } else {
+                JSON.parse(readValue);
+                setHighScore(readValue);
+            }
         } catch (error) {
             Alert.alert('Error reading data');
         }
@@ -63,7 +64,7 @@ export default function App() {
 
     useEffect(() => {
         readAsyncStorage();
-    }),[];
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -80,13 +81,15 @@ export default function App() {
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: '40%',
+        marginBottom: '40%',
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-between'
     },
     textinput: {
-        width: 200,
+        width: 50,
         borderColor: 'gray',
         borderWidth: 1
     }
