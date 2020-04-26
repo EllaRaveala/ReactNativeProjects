@@ -21,6 +21,8 @@ export default function App() {
         setRate] = useState('');
 
     useEffect(() => {
+        //API-kutsut tuli täyteen, sillä en ollut lisännyt alussa tyhjää taulukkoa useEffectin perään -> 
+        //siksi tallensin arvot suoraan muuttujaan
         setRates({
             AED: 3.963451,
             AFN: 82.094845,
